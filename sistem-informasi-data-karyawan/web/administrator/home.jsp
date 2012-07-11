@@ -27,6 +27,7 @@
         </script>
     </head>
     <body class="easyui-layout">
+        <%@include file="../WEB-INF/jspf/header.jspf" %>
         <div region="west" split="true" title="Main Menu" style="width:280px;padding1:1px;overflow:hidden;">
             <div class="easyui-accordion" fit="true" border="false">
                 <div title="Profile" selected="true" style="padding:10px;">
@@ -57,5 +58,6 @@
                 </div>
             </div>
         </div>
+        <%@include file="../WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>
