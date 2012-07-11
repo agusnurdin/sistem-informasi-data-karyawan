@@ -1,0 +1,6 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<link rel="stylesheet" type="text/css" href="../custom/themes/dark-hive/easyui.css">
+<link rel="stylesheet" type="text/css" href="../custom/themes/icon.css">
+<script type="text/javascript" src="../custom/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../custom/jquery.easyui.min.js"></script>
