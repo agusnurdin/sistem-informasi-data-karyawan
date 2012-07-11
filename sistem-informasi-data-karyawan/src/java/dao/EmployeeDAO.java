@@ -16,4 +16,6 @@ public interface EmployeeDAO extends GeneralDAO {
     public Employee get(String id) throws Exception;
 
     public List<Employee> gets() throws Exception;
+
+    public List<Employee> gets(String id) throws Exception;
 }

@@ -98,38 +98,18 @@
     </head>
     <body>
         <table id="dg" title="Table Employee" class="easyui-datagrid" style="width:auto;height:auto"
-               url="#"
+               url="../GetsEmployee"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
                 <tr>
-                    <th field="employee_id" width="50">Employee ID</th>
-                    <th field="full_name" width="50">Full Name</th>
+                    <th field="id" width="50">Employee ID</th>
+                    <th field="first_name" width="50">First Name</th>
+                    <th field="last_name" width="50">Last Name</th>
                     <th field="job" width="50">Job</th>
                     <th field="department" width="50">Department</th>
                 </tr>
             </thead>
-            <tbody>
-                <%
-                    /*
-                     * try { EntityManagerFactory emf =
-                     * Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                     * EntityManager em = emf.createEntityManager();
-                     *
-                     * EmployeeDAO dao = new EmployeeDAOImpl(em); List<Employee>
-                     * list = new ArrayList<Employee>(); list = dao.gets(); for
-                     * (Employee o : list) { out.print("<tr>"); out.print("<td>"
-                     * + o.getId() + "</td>"); out.print("<td>" +
-                     * o.getFirst_name() + " " + o.getLast_name() + "</td>");
-                     * out.print("<td>" + o.getJob().getTitle() + "</td>");
-                     * out.print("<td>" + o.getDepartment().getName() +
-                     * "</td>"); out.print("</tr>"); } } catch (Exception ex) {
-                     * out.print("<tr>"); out.print("<td colspan=\"5\">Can't
-                     * Connect Database Please Refreash</td>");
-                     * out.print("</tr>"); }
-                     */
-                %>
-            </tbody>
         </table>
 
         <%@include file="../WEB-INF/jspf/toolbar.jspf" %>
