@@ -45,14 +45,14 @@
             function newData(){
                 $('#dlg').dialog('open').dialog('setTitle','New Employee');
                 $('#fm').form('clear');
-                url = 'save_user.php';
+                url = '../InsertEmployee';
             }
             function updateData(){
                 var row = $('#dg').datagrid('getSelected');
                 if (row){
                     $('#dlg').dialog('open').dialog('setTitle','Edit Employee');
                     $('#fm').form('load',row);
-                    url = 'update_user.php?id='+row.id;
+                    url = '../UpdateEmployee?id='+row.id;
                 }
             }
             function insertData(){
@@ -80,7 +80,7 @@
                 if (row){
                     $.messager.confirm('Confirm','Are you sure you want to remove this user?',function(r){
                         if (r){
-                            $.post('remove_user.php',{id:row.id},function(result){
+                            $.post('../DeleteEmployee',{id:row.id},function(result){
                                 if (result.success){
                                     $('#dg').datagrid('reload');	// reload the user data
                                 } else {
@@ -97,7 +97,7 @@
         </script>
     </head>
     <body>
-        <table id="dg" title="Table Employee" class="easyui-datagrid" style="width:auto;height:auto"
+        <table id="dg" title="Table Data" class="easyui-datagrid" style="width:auto;height:auto"
                url="../GetsEmployee"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
@@ -120,7 +120,7 @@
             <form id="fm" method="post" novalidate>
                 <div class="fitem">
                     <label>Employee ID:</label>
-                    <input class="easyui-validatebox" name="employee_id" required="true">
+                    <input class="easyui-validatebox" name="id" required="true">
                 </div>
                 <div class="fitem">
                     <label>First Name:</label>
@@ -158,13 +158,13 @@
                 </div>
                 <div class="fitem">
                     <label>Job:</label>
-                    <select id="cc" class="easyui-combobox" name="job" required="true">
+                    <select id="cc" class="easyui-combobox" name="job">
 
                     </select>
                 </div>
                 <div class="fitem">
                     <label>Department:</label>
-                    <select id="cc" class="easyui-combobox" name="department" required="true">
+                    <select id="cc" class="easyui-combobox" name="department">
 
                     </select>
                 </div>

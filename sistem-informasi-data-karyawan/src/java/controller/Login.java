@@ -4,27 +4,21 @@
  */
 package controller;
 
-import dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import json.JSONArray;
-import model.Employee;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Luckma
  */
-@WebServlet(name = "GetsEmployee", urlPatterns = {"/GetsEmployee"})
-public class GetsEmployee extends HttpServlet {
+@WebServlet(name = "Login", urlPatterns = {"/Login"})
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -41,14 +35,9 @@ public class GetsEmployee extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
-                List<Employee> list = new EmployeeDAOImpl(em).gets();
-                out.print(new JSONArray(list).toString());
-            } catch (Exception ex) {
-            }
+            HttpSession mySession = request.getSession(true);
+            mySession.setAttribute("status", "activated");
+            response.sendRedirect("administrator/home.jsp");
         } finally {
             out.close();
         }
