@@ -42,20 +42,20 @@
         </style>
         <script type="text/javascript">
             var url;
-            function newData(){
-                $('#dlg').dialog('open').dialog('setTitle','New Employee');
+            function insertData(){
+                $('#dlg').dialog('open').dialog('setTitle','Insert Data');
                 $('#fm').form('clear');
                 url = '../InsertEmployee';
             }
             function updateData(){
                 var row = $('#dg').datagrid('getSelected');
                 if (row){
-                    $('#dlg').dialog('open').dialog('setTitle','Edit Employee');
+                    $('#dlg').dialog('open').dialog('setTitle','Update Data');
                     $('#fm').form('load',row);
                     url = '../UpdateEmployee?id='+row.id;
                 }
             }
-            function insertData(){
+            function saveData(){
                 $('#fm').form('submit',{
                     url: url,
                     onSubmit: function(){
@@ -69,7 +69,7 @@
                         } else {
                             $.messager.show({
                                 title: 'Error',
-                                msg: result.msg
+                                msg: 'Some errors occured.'
                             });
                         }
                     }
@@ -78,7 +78,7 @@
             function deleteData(){
                 var row = $('#dg').datagrid('getSelected');
                 if (row){
-                    $.messager.confirm('Confirm','Are you sure you want to remove this user?',function(r){
+                    $.messager.confirm('Confirm','Are you sure you want to remove this data ?',function(r){
                         if (r){
                             $.post('../DeleteEmployee',{id:row.id},function(result){
                                 if (result.success){
@@ -86,7 +86,7 @@
                                 } else {
                                     $.messager.show({	// show error message
                                         title: 'Error',
-                                        msg: result.msg
+                                        msg: 'Some errors occured.'
                                     });
                                 }
                             },'json');
@@ -150,11 +150,11 @@
                 </div>
                 <div class="fitem">
                     <label>Email:</label>
-                    <input class="easyui-validatebox" name="email" validType="email">
+                    <input class="easyui-validatebox" name="email" validType="email" required="true">
                 </div>
                 <div class="fitem">
                     <label>Phone:</label>
-                    <input class="easyui-validatebox" name="phone_number">
+                    <input id="nn" class="easyui-numberbox" name="phone_number" maxlength="14" precision="2" required="true"/>
                 </div>
                 <div class="fitem">
                     <label>Job:</label>
@@ -171,7 +171,7 @@
             </form>
         </div>
         <div id="dlg-buttons">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData()">Save</a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
         </div>
     </body>

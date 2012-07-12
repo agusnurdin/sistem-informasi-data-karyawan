@@ -36,9 +36,6 @@
         <%@include file="../WEB-INF/jspf/header.jspf" %>
         <div region="west" split="true" title="Main Menu" style="width:280px;padding1:1px;overflow:hidden;">
             <div class="easyui-accordion" fit="true" border="false">
-                <div title="Profile" selected="true" style="padding:10px;">
-                    <img src="../file/images/image1.jpg"/>  
-                </div>
                 <div title="Master Data" style="overflow:auto;padding:10px;">
                     <ul class="easyui-tree">  
                         <li><a href="#"  onclick="addTab('Employee','frm_employee.jsp')">Employee</a></li>
