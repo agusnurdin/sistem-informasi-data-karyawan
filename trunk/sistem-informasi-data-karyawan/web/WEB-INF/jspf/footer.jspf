@@ -1,5 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div region="south" style="height:100px;padding:10px;background:red;">
-    <p>The south content.</p>
+<div region="south" style="height:50px;padding:10px;background:red;">
+    The south content.
 </div>

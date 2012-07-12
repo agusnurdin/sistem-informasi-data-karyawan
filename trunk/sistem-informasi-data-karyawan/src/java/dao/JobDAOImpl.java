@@ -21,19 +21,6 @@ public class JobDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public Job get(String id) throws Exception {
-        Job o = null;
-        try {
-            em.getTransaction().begin();
-            o = em.find(Job.class, id);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return o;
-    }
-
-    @Override
     public List<Job> gets() throws Exception {
         List<Job> list = new ArrayList<Job>();
         try {

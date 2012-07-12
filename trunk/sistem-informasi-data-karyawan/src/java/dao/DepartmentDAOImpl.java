@@ -21,19 +21,6 @@ public class DepartmentDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public Department get(String id) throws Exception {
-        Department o = null;
-        try {
-            em.getTransaction().begin();
-            o = em.find(Department.class, id);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return o;
-    }
-
-    @Override
     public List<Department> gets() throws Exception {
         List<Department> list = new ArrayList<Department>();
         try {

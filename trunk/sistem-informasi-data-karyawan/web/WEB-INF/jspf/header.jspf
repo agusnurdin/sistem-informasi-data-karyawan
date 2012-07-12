@@ -1,5 +1,20 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div region="north" style="height:100px;padding:10px;background:red;">
-    <p>The north content.</p>
+<div region="north" style="height:50px;padding:10px;background:red;">
+    <div id="headerMenu">
+        <a href="#" class="easyui-menubutton" menu="#mm1" iconCls="icon-help">Help</a>
+        <a href="#" class="easyui-menubutton" menu="#mm2" iconCls="icon-account">Account</a>
+    </div>
+    <div id="mm1" style="width:150px;">
+        <div iconCls="icon-undo">Documentation</div>
+        <div iconCls="icon-redo">About</div>
+    </div>
+    <div id="mm2" class="easyui-panel" style="width:250px;height:200px;padding:10px;">
+        <center>
+            <img style="width:100px;height:100px;margin:10px;display:block" src="../file/images/image1.jpg"/>
+            <p>Jenengmu</p>
+        </center>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-ok" plain="true">Profile</a>
+        <a href="#" class="easyui-linkbutton" style="float:right" iconCls="icon-cancel" plain="true">Sign Out</a>
+    </div>
 </div>

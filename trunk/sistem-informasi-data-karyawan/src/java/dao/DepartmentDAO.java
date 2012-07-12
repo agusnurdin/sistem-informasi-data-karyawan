@@ -13,7 +13,5 @@ import model.Department;
  */
 public interface DepartmentDAO extends GeneralDAO {
 
-    public Department get(String id) throws Exception;
-
     public List<Department> gets() throws Exception;
 }

@@ -8,6 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            String p = (String) session.getAttribute("status");
+            if (p == null || !p.equals("activated")) {
+                response.sendRedirect("../index.jsp");
+            }
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <%@include file="../WEB-INF/jspf/custom.jspf" %>
@@ -42,8 +48,7 @@
                 </div>
                 <div title="Setting" style="padding:10px">
                     <ul class="easyui-tree">  
-                        <li><a href="#"  onclick="addTab('Restore','#')">Restore</a></li>
-                        <li><a href="#"  onclick="addTab('Backup','#')">Backup</a></li>
+                        <li><a href="#"  onclick="addTab('Maintenance','#')">Maintenance</a></li>
                     </ul>
                 </div>
             </div>
