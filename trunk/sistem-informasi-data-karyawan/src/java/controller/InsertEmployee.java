@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import json.JSONArray;
-import json.JSONObject;
 import model.Employee;
 
 /**
@@ -41,40 +40,33 @@ public class InsertEmployee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        boolean result = false;
         try {
-            Employee obj = new Employee();
             try {
+                Employee obj = new Employee();
                 obj.setId(request.getParameter("id"));
                 obj.setFirst_name(request.getParameter("first_name"));
                 obj.setLast_name(request.getParameter("last_name"));
                 obj.setGender(request.getParameter("gender"));
-                obj.setBirthday((Date) request.getAttribute("birthday"));
-                //obj.setDomicile((Place) request.getAttribute("domicile"));
+                Date dt = Date.valueOf(request.getParameter("birthday"));
+                obj.setBirthday(dt);
                 obj.setEmail(request.getParameter("email"));
                 obj.setPhone_number(request.getParameter("phone_number"));
                 //obj.setJob((Job) request.getAttribute("job"));
                 //obj.setDepartment((Department) request.getAttribute("department"));
+                
                 EntityManagerFactory emf =
                         Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
                 EntityManager em = emf.createEntityManager();
                 new EmployeeDAOImpl(em).insert(obj);
-                result = true;
+                JSONArray arr = new JSONArray();
+                //lempar data succes true
+                out.print(arr.toString());
             } catch (Exception ex) {
+                JSONArray arr = new JSONArray();
+                //lempar data succes false
+                out.print(arr.toString());
             }
         } finally {
-            try {
-                if (result) {
-                    JSONArray arr = new JSONArray();
-                    arr.put(new JSONObject().put("success", true));
-                    out.print(arr.toString());
-                } else {
-                    JSONArray arr = new JSONArray();
-                    arr.put(new JSONObject().put("msg", "Some errors occured."));
-                    out.print(arr.toString());
-                }
-            } catch (Exception e) {
-            }
             out.close();
         }
     }

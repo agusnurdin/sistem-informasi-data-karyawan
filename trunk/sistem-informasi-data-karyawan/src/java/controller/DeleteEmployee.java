@@ -40,7 +40,6 @@ public class DeleteEmployee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        boolean result = false;
         try {
             Employee obj;
             try {
@@ -51,22 +50,15 @@ public class DeleteEmployee extends HttpServlet {
                 obj = em.find(Employee.class, request.getParameter("id"));
                 em.getTransaction().commit();
                 new EmployeeDAOImpl(em).delete(obj);
-                result = true;
+                JSONArray arr = new JSONArray();
+                //lempar data succes true
+                out.print(arr.toString());
             } catch (Exception ex) {
+                JSONArray arr = new JSONArray();
+                //lempar data succes false
+                out.print(arr.toString());
             }
         } finally {
-            try {
-                if (result) {
-                    JSONArray arr = new JSONArray();
-                    arr.put(new JSONObject().put("success", true));
-                    out.print(arr.toString());
-                } else {
-                    JSONArray arr = new JSONArray();
-                    arr.put(new JSONObject().put("msg", "Some errors occured."));
-                    out.print(arr.toString());
-                }
-            } catch (Exception e) {
-            }
             out.close();
         }
     }
