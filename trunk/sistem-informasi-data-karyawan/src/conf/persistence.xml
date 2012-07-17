@@ -3,9 +3,11 @@
   <persistence-unit name="sistem-informasi-data-karyawanPU" transaction-type="RESOURCE_LOCAL">
     <provider>oracle.toplink.essentials.PersistenceProvider</provider>
     <class>model.Employee</class>
-    <class>model.Job</class>
     <class>model.Department</class>
+    <class>model.Job</class>
     <class>model.Place</class>
+    <class>model.Roles</class>
+    <class>model.Users</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="toplink.jdbc.user" value="root"/>

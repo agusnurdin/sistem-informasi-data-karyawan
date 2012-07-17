@@ -2,32 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.frm_employee;
 
-import dao.UsersDAOImpl;
+import dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Roles;
-import model.Users;
+import model.Employee;
 
 /**
  *
  * @author Luckma
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "GetsEmployee", urlPatterns = {"/GetsEmployee"})
+public class GetsEmployee extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -48,34 +44,42 @@ public class Login extends HttpServlet {
                 EntityManagerFactory emf =
                         Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
                 EntityManager em = emf.createEntityManager();
-
-                Users u = new Users();
-                u.setId("672009107");
-                u.setPassword("08161991");
-                u.setActive(true);
-                Roles r = new Roles();
-                r.setName("admin1");
-                r.setDescription("Administrator sistem informasi data karyawan");
-                List<Roles> rs = new ArrayList<Roles>();
-                rs.add(r);
-                u.setRoles(rs);
-                new UsersDAOImpl(em).insert(r);
-                new UsersDAOImpl(em).insert(u);
-
-                Users obj = new UsersDAOImpl(em).get(request.getParameter("id"), request.getParameter("password"));
-                if (obj != null) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("status", "activated");
-                    response.sendRedirect("administrator/home.jsp");
-                } else {
-                    out.print("Wrong id or password");
-                    RequestDispatcher reqDis = request.getRequestDispatcher("index.jsp");
-                    reqDis.include(request, response);
+                List<Employee> list;
+                String filter = request.getParameter("filter");
+                if (filter == null) {
+                    filter = "";
                 }
+                list = new EmployeeDAOImpl(em).gets(filter);
+                out.print("[");
+                for (int i = 0; i < list.size(); i++) {
+                    out.print("{");
+                    out.print("\"id\":\"" + list.get(i).getId() + "\",");
+                    out.print("\"first_name\":\"" + list.get(i).getFirst_name() + "\",");
+                    out.print("\"last_name\":\"" + list.get(i).getLast_name() + "\",");
+                    out.print("\"full_name\":\"" + list.get(i).getFirst_name() + " " + list.get(i).getLast_name() + "\",");
+                    out.print("\"gender\":\"" + list.get(i).getGender() + "\",");
+                    out.print("\"birthday\":\"" + list.get(i).getBirthday() + "\",");
+                    out.print("\"email\":\"" + list.get(i).getEmail() + "\",");
+                    out.print("\"phone_number\":\"" + list.get(i).getPhone_number() + "\",");
+                    out.print("\"street_address\":\"" + list.get(i).getDomicile().getStreet_address() + "\",");
+                    out.print("\"postal_code\":\"" + list.get(i).getDomicile().getPostal_code() + "\",");
+                    out.print("\"city\":\"" + list.get(i).getDomicile().getCity() + "\",");
+                    out.print("\"state_province\":\"" + list.get(i).getDomicile().getState_province() + "\",");
+                    out.print("\"country\":\"" + list.get(i).getDomicile().getCountry() + "\",");
+                    if (list.get(i).getJob() != null) {
+                        out.print("\"job\":\"" + list.get(i).getJob().getTitle() + "\",");
+                    }
+                    if (list.get(i).getDepartment() != null) {
+                        out.print("\"department\":\"" + list.get(i).getLast_name() + "\",");
+                    }
+                    out.print("\"url_photo\":\"" + list.get(i).getUrl_photo() + "\"");
+                    out.print("}");
+                    if (i < list.size() - 1) {
+                        out.print(",");
+                    }
+                }
+                out.print("]");
             } catch (Exception ex) {
-                out.print(ex.getMessage());
-                RequestDispatcher reqDis = request.getRequestDispatcher("index.jsp");
-                reqDis.include(request, response);
             }
         } finally {
             out.close();

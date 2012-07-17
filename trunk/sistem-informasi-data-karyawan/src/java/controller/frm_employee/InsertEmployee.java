@@ -2,32 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.frm_employee;
 
-import dao.UsersDAOImpl;
+import dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Roles;
-import model.Users;
+import model.Department;
+import model.Employee;
+import model.Job;
+import model.Place;
 
 /**
  *
  * @author Luckma
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "InsertEmployee", urlPatterns = {"/InsertEmployee"})
+public class InsertEmployee extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -49,33 +48,35 @@ public class Login extends HttpServlet {
                         Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
                 EntityManager em = emf.createEntityManager();
 
-                Users u = new Users();
-                u.setId("672009107");
-                u.setPassword("08161991");
-                u.setActive(true);
-                Roles r = new Roles();
-                r.setName("admin1");
-                r.setDescription("Administrator sistem informasi data karyawan");
-                List<Roles> rs = new ArrayList<Roles>();
-                rs.add(r);
-                u.setRoles(rs);
-                new UsersDAOImpl(em).insert(r);
-                new UsersDAOImpl(em).insert(u);
+                Employee obj = new Employee();
 
-                Users obj = new UsersDAOImpl(em).get(request.getParameter("id"), request.getParameter("password"));
-                if (obj != null) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("status", "activated");
-                    response.sendRedirect("administrator/home.jsp");
-                } else {
-                    out.print("Wrong id or password");
-                    RequestDispatcher reqDis = request.getRequestDispatcher("index.jsp");
-                    reqDis.include(request, response);
-                }
+                obj.setId(request.getParameter("id"));
+                obj.setFirst_name(request.getParameter("first_name"));
+                obj.setLast_name(request.getParameter("last_name"));
+                obj.setGender(request.getParameter("gender"));
+                Date dt = Date.valueOf(request.getParameter("birthday"));
+                obj.setBirthday(dt);
+                Place domicile = new Place();
+                domicile.setStreet_address(request.getParameter("street_address"));
+                domicile.setPostal_code(request.getParameter("postal_code"));
+                domicile.setCity(request.getParameter("city"));
+                domicile.setState_province(request.getParameter("state_province"));
+                domicile.setCountry(request.getParameter("country"));
+                obj.setDomicile(domicile);
+                obj.setEmail(request.getParameter("email"));
+                obj.setPhone_number(request.getParameter("phone_number"));
+                em.getTransaction().begin();
+                Job job = em.find(Job.class, request.getParameter("job"));
+                em.getTransaction().commit();
+                obj.setJob(job);
+                em.getTransaction().begin();
+                Department department = em.find(Department.class, request.getParameter("department"));
+                em.getTransaction().commit();
+                obj.setDepartment(department);
+
+                new EmployeeDAOImpl(em).insert(obj);
+                out.print("[{\"success\":\"true\"}]");
             } catch (Exception ex) {
-                out.print(ex.getMessage());
-                RequestDispatcher reqDis = request.getRequestDispatcher("index.jsp");
-                reqDis.include(request, response);
             }
         } finally {
             out.close();

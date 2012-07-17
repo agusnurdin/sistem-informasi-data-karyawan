@@ -29,7 +29,6 @@ public class Employee implements Serializable {
     private Date birthday;
     @OneToOne(cascade = {CascadeType.ALL})
     private Place domicile;
-    private String url_photo;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(length = 14, nullable = false, unique = true)
@@ -38,6 +37,7 @@ public class Employee implements Serializable {
     private Job job;
     @ManyToOne
     private Department department;
+    private String url_photo;
 
     public Date getBirthday() {
         return birthday;

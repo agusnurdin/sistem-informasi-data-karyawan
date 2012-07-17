@@ -21,11 +21,11 @@ public class DepartmentDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public List<Department> gets() throws Exception {
+    public List<Department> gets(String id) throws Exception {
         List<Department> list = new ArrayList<Department>();
         try {
             em.getTransaction().begin();
-            list = em.createQuery("SELECT o FROM Department o").getResultList();
+            list = this.em.createQuery("SELECT o FROM Department o WHERE o.id LIKE :id").setParameter("id", "%" + id + "%").getResultList();
             em.getTransaction().commit();
         } catch (Exception ex) {
             throw ex;

@@ -21,11 +21,11 @@ public class JobDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public List<Job> gets() throws Exception {
+    public List<Job> gets(String id) throws Exception {
         List<Job> list = new ArrayList<Job>();
         try {
             em.getTransaction().begin();
-            list = em.createQuery("SELECT o FROM Job o").getResultList();
+            list = this.em.createQuery("SELECT o FROM Job o WHERE o.id LIKE :id").setParameter("id", "%" + id + "%").getResultList();
             em.getTransaction().commit();
         } catch (Exception ex) {
             throw ex;

@@ -13,7 +13,5 @@ import model.Employee;
  */
 public interface EmployeeDAO extends GeneralDAO {
 
-    public List<Employee> gets() throws Exception;
-
     public List<Employee> gets(String id) throws Exception;
 }
