@@ -4,14 +4,6 @@
     Author     : Luckma
 --%>
 
-<%@page import="model.Employee"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="dao.EmployeeDAOImpl"%>
-<%@page import="dao.EmployeeDAO"%>
-<%@page import="javax.persistence.EntityManager"%>
-<%@page import="javax.persistence.Persistence"%>
-<%@page import="javax.persistence.EntityManagerFactory"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,59 +33,28 @@
             }
         </style>
         <script type="text/javascript">
-            var url;
-            function insertData(){
-                $('#dlg').dialog('open').dialog('setTitle','Insert Data');
-                $('#fm').form('clear');
-                url = '../InsertEmployee';
-            }
-            function updateData(){
-                var row = $('#dg').datagrid('getSelected');
-                if (row){
-                    $('#dlg').dialog('open').dialog('setTitle','Update Data');
-                    $('#fm').form('load',row);
-                    url = '../UpdateEmployee?id='+row.id;
+            $.fn.datebox.defaults.formatter = function(date){
+                var y = date.getFullYear();
+                var m = date.getMonth()+1;
+                var d = date.getDate();
+                return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+            };
+            $.fn.datebox.defaults.parser = function(s){
+                if (!s) return new Date();
+                var ss = s.split('-');
+                var m = parseInt(ss[0],10);
+                var d = parseInt(ss[1],10);
+                var y = parseInt(ss[2],10);
+                if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+                    return new Date(y,m-1,d);
+                } else {
+                    return new Date();
                 }
-            }
-            function saveData(){
-                $('#fm').form('submit',{
-                    url: url,
-                    onSubmit: function(){
-                        return $(this).form('validate');
-                    },
-                    success: function(result){
-                        var result = eval('('+result+')');
-                        if (result.success){
-                            $('#dlg').dialog('close');		// close the dialog
-                            $('#dg').datagrid('reload');	// reload the user data
-                        } else {
-                            $.messager.show({
-                                title: 'Error',
-                                msg: 'Some errors occured.'
-                            });
-                        }
-                    }
-                });
-            }
-            function deleteData(){
-                var row = $('#dg').datagrid('getSelected');
-                if (row){
-                    $.messager.confirm('Confirm','Are you sure you want to remove this data ?',function(r){
-                        if (r){
-                            $.post('../DeleteEmployee',{id:row.id},function(result){
-                                if (result.success){
-                                    $('#dg').datagrid('reload');	// reload the user data
-                                } else {
-                                    $.messager.show({	// show error message
-                                        title: 'Error',
-                                        msg: 'Some errors occured.'
-                                    });
-                                }
-                            },'json');
-                        }
-                    });
-                }
-            }
+            };
+           
+            var urlInsert = '../InsertEmployee';
+            var urlUpdate= '../UpdateEmployee?id=';
+            var urlDelete = '../DeleteEmployee';           
         </script>
     </head>
     <body>
@@ -103,9 +64,8 @@
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
                 <tr>
-                    <th field="id" width="50">Employee ID</th>
-                    <th field="first_name" width="50">First Name</th>
-                    <th field="last_name" width="50">Last Name</th>
+                    <th field="id" width="50">ID</th>
+                    <th field="full_name" width="50">First Name</th>
                     <th field="job" width="50">Job</th>
                     <th field="department" width="50">Department</th>
                 </tr>
@@ -116,6 +76,9 @@
 
         <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">
+            <div style="float:left">
+                <img style="width:100px;height:100px;margin:10px;display:block" src="../file/images/default.jpg"/>
+            </div>
             <div class="ftitle">Employee Data</div>
             <form id="fm" method="post" novalidate>
                 <div class="fitem">
@@ -139,14 +102,27 @@
                 </div>
                 <div class="fitem">
                     <label>Birthday:</label>
-                    <input id="dd" class="easyui-datebox" name="birthday" required="true">
+                    <input id="dd"  class="easyui-datebox" name="birthday" required="true">
                 </div>
                 <div class="fitem">
-                    <label>Domicile:</label>
+                    <label>Street Address:</label>
+                    <input class="easyui-validatebox" name="street_address" required="true">
                 </div>
                 <div class="fitem">
-                    <label>Photo:</label>
-                    <input type="file" name="url_photo" accept="image/png">
+                    <label>Postal Code:</label>
+                    <input class="easyui-validatebox" name="postal_code" required="true">
+                </div>
+                <div class="fitem">
+                    <label>City:</label>
+                    <input class="easyui-validatebox" name="city" required="true">
+                </div>
+                <div class="fitem">
+                    <label>State Province:</label>
+                    <input class="easyui-validatebox" name="state_province" required="true">
+                </div>
+                <div class="fitem">
+                    <label>Country:</label>
+                    <input class="easyui-validatebox" name="country" required="true">
                 </div>
                 <div class="fitem">
                     <label>Email:</label>
@@ -154,19 +130,19 @@
                 </div>
                 <div class="fitem">
                     <label>Phone:</label>
-                    <input id="nn" class="easyui-numberbox" name="phone_number" maxlength="14" precision="2" required="true"/>
+                    <input id="nn" class="easyui-numberbox" name="phone_number" maxlength="14" required="true"/>
                 </div>
                 <div class="fitem">
                     <label>Job:</label>
-                    <select id="cc" class="easyui-combobox" name="job">
-
-                    </select>
+                    <input class="easyui-combobox" name="job" url="../GetsJob" valueField="id" textField="title" panelHeight="auto">
                 </div>
                 <div class="fitem">
                     <label>Department:</label>
-                    <select id="cc" class="easyui-combobox" name="department">
-
-                    </select>
+                    <input class="easyui-combobox" name="department" url="../GetsDepartment" valueField="id" textField="name" panelHeight="auto">
+                </div>
+                <div class="fitem">
+                    <label>Photo:</label>
+                    <input type="file" name="url_photo" accept="image/jpg" value="../file/images/default.jpg">
                 </div>
             </form>
         </div>

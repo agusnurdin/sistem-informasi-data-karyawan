@@ -17,7 +17,7 @@ public class Place implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     @Column(length = 30)
     private String street_address;
     @Column(length = 5)
@@ -69,11 +69,11 @@ public class Place implements Serializable {
         this.street_address = street_address;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

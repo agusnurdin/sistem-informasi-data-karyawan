@@ -21,24 +21,11 @@ public class EmployeeDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public List<Employee> gets() throws Exception {
-        List<Employee> list = new ArrayList<Employee>();
-        try {
-            em.getTransaction().begin();
-            list = em.createQuery("SELECT o FROM Employee o").getResultList();
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return list;
-    }
-
-    @Override
     public List<Employee> gets(String id) throws Exception {
         List<Employee> list = new ArrayList<Employee>();
         try {
             this.em.getTransaction().begin();
-            list = this.em.createQuery("SELECT o FROM Employee o WHERE o.id LIKE :'%id%'").setParameter("id", id).getResultList();
+            list = this.em.createQuery("SELECT o FROM Employee o WHERE o.id LIKE :id").setParameter("id", "%" + id + "%").getResultList();
             this.em.getTransaction().commit();
         } catch (Exception ex) {
             throw ex;
