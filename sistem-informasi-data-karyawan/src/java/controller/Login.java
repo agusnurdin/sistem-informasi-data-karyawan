@@ -59,8 +59,8 @@ public class Login extends HttpServlet {
                 List<Roles> rs = new ArrayList<Roles>();
                 rs.add(r);
                 u.setRoles(rs);
-                new UsersDAOImpl(em).insert(r);
-                new UsersDAOImpl(em).insert(u);
+                //new UsersDAOImpl(em).insert(r);
+                //new UsersDAOImpl(em).insert(u);
 
                 Users obj = new UsersDAOImpl(em).get(request.getParameter("id"), request.getParameter("password"));
                 if (obj != null) {
