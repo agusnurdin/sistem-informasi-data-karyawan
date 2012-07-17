@@ -4,27 +4,21 @@
  */
 package controller;
 
-import dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import json.JSONArray;
-import json.JSONObject;
-import model.Employee;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Luckma
  */
-@WebServlet(name = "DeleteEmployee", urlPatterns = {"/DeleteEmployee"})
-public class DeleteEmployee extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -41,24 +35,10 @@ public class DeleteEmployee extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Employee obj;
-            try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
-                em.getTransaction().begin();
-                obj = em.find(Employee.class, request.getParameter("id"));
-                em.getTransaction().commit();
-                new EmployeeDAOImpl(em).delete(obj);
-                JSONArray arr = new JSONArray();
-                //lempar data succes true
-                out.print(arr.toString());
-            } catch (Exception ex) {
-                JSONArray arr = new JSONArray();
-                //lempar data succes false
-                out.print(arr.toString());
-            }
-        } finally {
+            HttpSession session = request.getSession(true);
+            session.removeAttribute("status");
+            response.sendRedirect("index.jsp");
+        } finally {            
             out.close();
         }
     }
