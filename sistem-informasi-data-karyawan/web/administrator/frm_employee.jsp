@@ -65,7 +65,7 @@
             <thead>
                 <tr>
                     <th field="id" width="50">ID</th>
-                    <th field="full_name" width="50">First Name</th>
+                    <th field="full_name" width="50">Full Name</th>
                     <th field="job" width="50">Job</th>
                     <th field="department" width="50">Department</th>
                 </tr>
@@ -76,9 +76,6 @@
 
         <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">
-            <div style="float:left">
-                <img style="width:100px;height:100px;margin:10px;display:block" src="../file/images/default.jpg"/>
-            </div>
             <div class="ftitle">Employee Data</div>
             <form id="fm" method="post" novalidate>
                 <div class="fitem">
@@ -95,14 +92,14 @@
                 </div>
                 <div class="fitem">
                     <label>Gender:</label>
-                    <select id="cc" class="easyui-combobox" name="gender" required="true">
+                    <select id="cc" class="easyui-combobox" name="gender" required="true" style="width:150px">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
                 </div>
                 <div class="fitem">
                     <label>Birthday:</label>
-                    <input id="dd"  class="easyui-datebox" name="birthday" required="true">
+                    <input id="dd"  class="easyui-datebox" name="birthday" required="true" style="width:150px">
                 </div>
                 <div class="fitem">
                     <label>Street Address:</label>
@@ -130,15 +127,15 @@
                 </div>
                 <div class="fitem">
                     <label>Phone:</label>
-                    <input id="nn" class="easyui-numberbox" name="phone_number" maxlength="14" required="true"/>
+                    <input class="easyui-validatebox" name="phone_number" type="tel" maxlength="14" required="true"/>
                 </div>
                 <div class="fitem">
                     <label>Job:</label>
-                    <input class="easyui-combobox" name="job" url="../GetsJob" valueField="id" textField="title" panelHeight="auto">
+                    <input class="easyui-combobox" name="job" url="../GetsJob" valueField="id" textField="title" panelHeight="auto" style="width:150px">
                 </div>
                 <div class="fitem">
                     <label>Department:</label>
-                    <input class="easyui-combobox" name="department" url="../GetsDepartment" valueField="id" textField="name" panelHeight="auto">
+                    <input class="easyui-combobox" name="department" url="../GetsDepartment" valueField="id" textField="name" panelHeight="auto" style="width:150px">
                 </div>
                 <div class="fitem">
                     <label>Photo:</label>
