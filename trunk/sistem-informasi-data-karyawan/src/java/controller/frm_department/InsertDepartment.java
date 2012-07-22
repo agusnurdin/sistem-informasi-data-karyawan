@@ -7,7 +7,6 @@ package controller.frm_department;
 import dao.DepartmentDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -17,13 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Department;
+import model.Employee;
+import model.Place;
 
 /**
  *
- * @author Fajar_Ardhanta
+ * @author Egar
  */
-@WebServlet(name = "GetsDepartment", urlPatterns = {"/GetsDepartment"})
-public class GetsDepartment extends HttpServlet {
+@WebServlet(name = "InsertDepartment", urlPatterns = {"/InsertDepartment"})
+public class InsertDepartment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -44,34 +45,31 @@ public class GetsDepartment extends HttpServlet {
                 EntityManagerFactory emf =
                         Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
                 EntityManager em = emf.createEntityManager();
-                List<Department> list;
-                String filter = request.getParameter("filter");
-                if (filter == null) {
-                    filter = "";
-                }
-                list = new DepartmentDAOImpl(em).gets(filter);
-                out.print("[");
-                for (int i = 0; i < list.size(); i++) {
-                    out.print("{");
-                    out.print("\"id\":\"" + list.get(i).getId() + "\",");
-                    out.print("\"name\":\"" + list.get(i).getName() + "\",");
-                    out.print("\"description\":\"" + list.get(i).getDescription() + "\",");
-                    if (list.get(i).getManager() != null) {
-                        out.print("\"manager\":\"" + list.get(i).getManager().getId() + "\",");
-                        out.print("\"manager_name\":\"" + list.get(i).getManager().getFirst_name() + " " + list.get(i).getManager().getLast_name() + "\",");
-                    }
-                    out.print("\"street_address\":\"" + list.get(i).getLocation().getStreet_address() + "\",");
-                    out.print("\"postal_code\":\"" + list.get(i).getLocation().getPostal_code() + "\",");
-                    out.print("\"city\":\"" + list.get(i).getLocation().getCity() + "\",");
-                    out.print("\"state_province\":\"" + list.get(i).getLocation().getState_province() + "\",");
-                    out.print("\"country\":\"" + list.get(i).getLocation().getCountry() + "\"");
-                    out.print("}");
-                    if (i < list.size() - 1) {
-                        out.print(",");
-                    }
-                }
-                out.print("]");
+
+                Department obj = new Department();
+
+                obj.setId(request.getParameter("id"));
+                obj.setName(request.getParameter("name"));
+                obj.setDescription(request.getParameter("description"));
+                em.getTransaction().begin();
+                Employee obje = em.find(Employee.class, request.getParameter("manager"));
+                em.getTransaction().commit();
+                obj.setManager(obje);
+
+                Place domicile = new Place();
+                domicile.setStreet_address(request.getParameter("street_address"));
+                domicile.setPostal_code(request.getParameter("postal_code"));
+                domicile.setCity(request.getParameter("city"));
+                domicile.setState_province(request.getParameter("state_province"));
+                domicile.setCountry(request.getParameter("country"));
+                obj.setLocation(domicile);
+
+
+
+                new DepartmentDAOImpl(em).insert(obj);
+                out.print("{\"success\":true}");
             } catch (Exception ex) {
+                out.print("{\"success\":false}");
             }
         } finally {
             out.close();
