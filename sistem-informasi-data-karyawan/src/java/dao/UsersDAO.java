@@ -13,6 +13,7 @@ import model.Users;
  */
 public interface UsersDAO extends GeneralDAO {
 
+    public Users get(String id) throws Exception;
     public Users get(String id, String password) throws Exception;
     public List<Users> gets(String id) throws Exception;
 }

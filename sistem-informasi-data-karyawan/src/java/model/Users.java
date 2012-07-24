@@ -5,7 +5,7 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -27,6 +27,7 @@ public class Users implements Serializable {
     @OneToMany
     private List<Roles> roles;
     private boolean active;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date currently_use;
     private String ip_address;
 
