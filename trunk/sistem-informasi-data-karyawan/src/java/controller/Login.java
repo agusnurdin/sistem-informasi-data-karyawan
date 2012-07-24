@@ -4,14 +4,12 @@
  */
 package controller;
 
+import Tools.PersistenceUtil;
 import dao.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Roles;
 import model.Users;
 
 /**
  *
- * @author Luckma
+ * @author Aphonk
  */
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
@@ -45,27 +42,15 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
-
-                Users u = new Users();
-                u.setId("672009107");
-                u.setPassword("08161991");
-                u.setActive(true);
-                Roles r = new Roles();
-                r.setName("admin1");
-                r.setDescription("Administrator sistem informasi data karyawan");
-                List<Roles> rs = new ArrayList<Roles>();
-                rs.add(r);
-                u.setRoles(rs);
-                //new UsersDAOImpl(em).insert(r);
-                //new UsersDAOImpl(em).insert(u);
-
+                EntityManager em = PersistenceUtil.getEntityManager();
                 Users obj = new UsersDAOImpl(em).get(request.getParameter("id"), request.getParameter("password"));
                 if (obj != null) {
+                    obj.setCurrently_use(new Date());
+                    obj.setIp_address(request.getRemoteAddr());
+                    new UsersDAOImpl(em).update(obj);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("status", "activated");
+                    session.setAttribute("user", obj.getId());
                     response.sendRedirect("administrator/home.jsp");
                 } else {
                     out.print("Wrong id or password");

@@ -21,6 +21,19 @@ public class UsersDAOImpl extends GeneralDAOImpl
     }
 
     @Override
+    public Users get(String id) throws Exception {
+        Users obj = null;
+        try {
+            em.getTransaction().begin();
+            obj = em.find(Users.class, id);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return obj;
+    }
+
+    @Override
     public Users get(String id, String password) throws Exception {
         Users obj = null;
         try {
