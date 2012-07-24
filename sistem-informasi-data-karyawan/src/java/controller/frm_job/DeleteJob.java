@@ -4,12 +4,11 @@
  */
 package controller.frm_job;
 
+import Tools.PersistenceUtil;
 import dao.JobDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +23,11 @@ import model.Job;
 @WebServlet(name = "DeleteJob", urlPatterns = {"/DeleteJob"})
 public class DeleteJob extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -37,9 +39,7 @@ public class DeleteJob extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
+                EntityManager em = PersistenceUtil.getEntityManager();
 
                 em.getTransaction().begin();
                 Job obj = em.find(Job.class, request.getParameter("id"));
@@ -51,14 +51,16 @@ public class DeleteJob extends HttpServlet {
             } catch (Exception ex) {
                 out.print("{\"success\":false}");
             }
-        } finally {            
+        } finally {
             out.close();
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -70,8 +72,10 @@ public class DeleteJob extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
+    /**
+     * Handles the HTTP
+     * <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -83,8 +87,9 @@ public class DeleteJob extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
