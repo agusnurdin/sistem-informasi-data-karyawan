@@ -4,13 +4,12 @@
  */
 package controller.frm_employee;
 
+import Tools.PersistenceUtil;
 import dao.EmployeeDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,9 +43,7 @@ public class UpdateEmployee extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
+                EntityManager em = PersistenceUtil.getEntityManager();
 
                 Employee obj = new Employee();
                 obj.setId(request.getParameter("id"));

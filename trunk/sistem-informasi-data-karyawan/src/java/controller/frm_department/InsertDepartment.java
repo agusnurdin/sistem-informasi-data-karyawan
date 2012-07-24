@@ -4,12 +4,11 @@
  */
 package controller.frm_department;
 
+import Tools.PersistenceUtil;
 import dao.DepartmentDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,9 +41,7 @@ public class InsertDepartment extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             try {
-                EntityManagerFactory emf =
-                        Persistence.createEntityManagerFactory("sistem-informasi-data-karyawanPU");
-                EntityManager em = emf.createEntityManager();
+                EntityManager em = PersistenceUtil.getEntityManager();
 
                 Department obj = new Department();
 
