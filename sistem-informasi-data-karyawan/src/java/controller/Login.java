@@ -21,7 +21,7 @@ import model.Users;
 
 /**
  *
- * @author Aphonk
+ * @author Joni_Geol
  */
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
         try {
             try {
                 EntityManager em = PersistenceUtil.getEntityManager();
-                Users obj = new UsersDAOImpl(em).get(request.getParameter("id"), request.getParameter("password"));
+                Users obj = new UsersDAOImpl(em).get(request.getParameter("username"), request.getParameter("password"));
                 if (obj != null) {
                     obj.setCurrently_use(new Date());
                     obj.setIp_address(request.getRemoteAddr());

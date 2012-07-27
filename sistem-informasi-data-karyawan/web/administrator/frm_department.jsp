@@ -37,29 +37,22 @@
             }
         </style>
         <script type="text/javascript">
+            var colTable = [[  
+                    {field:'id',title:'ID',width:25,align:'center'},  
+                    {field:'name',title:'Name',width:50},  
+                    {field:'description',title:'Description',width:75}  
+                ]];
+            var urlTable = '../GetsDepartment';
             var urlInsert = '../InsertDepartment';
             var urlUpdate= '../UpdateDepartment?id=';
             var urlDelete = '../DeleteDepartment';
         </script>
     </head>
     <body>
-        <table id="dg" title="Table Data" class="easyui-datagrid" style="width:auto;height:auto"
-               url="../GetsDepartment"
-               toolbar="#toolbar" pagination="true"
-               rownumbers="true" fitColumns="true" singleSelect="true">
-            <thead>
-                <tr>
-                    <th field="id" width="50">ID</th>
-                    <th field="name" width="50">Name</th>
-                    <th field="description" width="50">Description</th>
-                    <th field="manager_name" width="50">Manager</th>
-                </tr>
-            </thead>
-        </table>
 
-        <%@include file="../WEB-INF/jspf/toolbar.jspf" %>
+        <%@include file="../WEB-INF/jspf/table_data.jspf" %>
 
-       <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
+        <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">
             <div class="ftitle">Department Data</div>
             <form id="fm" method="post" novalidate>
