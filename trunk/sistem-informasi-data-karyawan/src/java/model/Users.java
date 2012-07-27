@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 /**
  *
- * @author Luckma
+ * @author Joni_Geol
  */
 @Entity
 public class Users implements Serializable {
@@ -19,8 +19,10 @@ public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
-    @Column(nullable=false)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String username;
+    @Column(nullable = false)
     private String password;
     @OneToOne
     private Employee employee;
@@ -79,11 +81,19 @@ public class Users implements Serializable {
         this.roles = roles;
     }
 
-    public String getId() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

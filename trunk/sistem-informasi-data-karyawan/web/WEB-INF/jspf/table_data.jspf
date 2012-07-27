@@ -1,6 +1,19 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<table id="dg" class="easyui-datagrid">
+</table>
 <script>
+    $('#dg').datagrid({
+        title:'Table Data',
+        url:urlTable,  
+        columns:colTable,
+        toolbar:'#toolbar',
+        pagination:true,
+        rownumbers:true,
+        fitColumns:true,
+        singleSelect:true
+    }); 
+    
     var url;
     function insertData(){
         $('#dlg').dialog('open').dialog('setTitle','New Data');

@@ -52,27 +52,21 @@
                 }
             };
            
+            var colTable = [[  
+                    {field:'id',title:'ID',width:25,align:'center'},  
+                    {field:'full_name',title:'Full Name',width:75},  
+                    {field:'job',title:'Job',width:50},  
+                    {field:'department',title:'Department',width:50}  
+                ]];
+            var urlTable = '../GetsEmployee';
             var urlInsert = '../InsertEmployee';
             var urlUpdate= '../UpdateEmployee?id=';
             var urlDelete = '../DeleteEmployee';           
         </script>
     </head>
     <body>
-        <table id="dg" title="Table Data" class="easyui-datagrid" style="width:auto;height:auto"
-               url="../GetsEmployee"
-               toolbar="#toolbar" pagination="true"
-               rownumbers="true" fitColumns="true" singleSelect="true">
-            <thead>
-                <tr>
-                    <th field="id" width="50">ID</th>
-                    <th field="full_name" width="50">Full Name</th>
-                    <th field="job" width="50">Job</th>
-                    <th field="department" width="50">Department</th>
-                </tr>
-            </thead>
-        </table>
 
-        <%@include file="../WEB-INF/jspf/toolbar.jspf" %>
+        <%@include file="../WEB-INF/jspf/table_data.jspf" %>
 
         <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">

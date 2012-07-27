@@ -11,7 +11,7 @@ import model.Users;
 
 /**
  *
- * @author Luckma
+ * @author Joni_Geol
  */
 public class UsersDAOImpl extends GeneralDAOImpl
         implements UsersDAO {
@@ -21,7 +21,7 @@ public class UsersDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public Users get(String id) throws Exception {
+    public Users get(Long id) throws Exception {
         Users obj = null;
         try {
             em.getTransaction().begin();
@@ -34,15 +34,12 @@ public class UsersDAOImpl extends GeneralDAOImpl
     }
 
     @Override
-    public Users get(String id, String password) throws Exception {
+    public Users get(String username, String password) throws Exception {
         Users obj = null;
         try {
             em.getTransaction().begin();
-            obj = em.find(Users.class, id);
+            obj = (Users) this.em.createQuery("SELECT o FROM Users o WHERE o.username =:username and o.password=:password").setParameter("username", username).setParameter("password", password).getSingleResult();
             em.getTransaction().commit();
-            if (obj.getPassword().equals(password) && obj.isActive() == false) {
-                obj = null;
-            }
         } catch (Exception ex) {
             throw ex;
         }

@@ -22,7 +22,7 @@
                 if ($('#tt').tabs('exists', title)){  
                     $('#tt').tabs('select', title);  
                 } else {  
-                    var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';  
+                    var content = '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:100%;overflow:hidden;"></iframe>';  
                     $('#tt').tabs('add',{  
                         title:title,  
                         content:content,
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div region="center" title="Main Title" style="overflow:hidden;">
+        <div region="center" style="overflow:hidden;">
             <div id="tt" class="easyui-tabs" fit="true" border="false">
                 <div title="Start Page" style="padding:20px;overflow:hidden;"> 
                     <div style="margin-top:20px;">
