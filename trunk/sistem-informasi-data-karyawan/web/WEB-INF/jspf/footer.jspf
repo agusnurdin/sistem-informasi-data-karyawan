@@ -1,5 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div region="south" style="height:50px;padding:10px;background:red;">
-    The south content.
+<div data-options="region:'south',border:false" style="height:50px;padding:10px;">
+    <div style="text-align:center">
+        <a>Copyleft Geladak Begundal</a>
+    </div>
 </div>
