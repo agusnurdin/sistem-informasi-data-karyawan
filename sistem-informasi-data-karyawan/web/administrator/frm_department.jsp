@@ -11,92 +11,60 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <%@include file="../WEB-INF/jspf/custom.jspf" %>
-        <style type="text/css">
-            #fm{
-                margin:0;
-                padding:10px 30px;
-            }
-            .ftitle{
-                font-size:14px;
-                font-weight:bold;
-                color:#666;
-                padding:5px 0;
-                margin-bottom:10px;
-                border-bottom:1px solid #ccc;
-            }
-            .fitem{
-                margin-bottom:5px;
-            }
-            .fitem label{
-                display:inline-block;
-                width:80px;
-            }
-            .fitem textarea{
-                width:150px;
-                height:100px;
-            }
-        </style>
         <script type="text/javascript">
             var colTable = [[  
                     {field:'id',title:'ID',width:25,align:'center'},  
                     {field:'name',title:'Name',width:50},  
                     {field:'description',title:'Description',width:75}  
                 ]];
-            var urlTable = '../GetsDepartment';
-            var urlInsert = '../InsertDepartment';
-            var urlUpdate= '../UpdateDepartment?id=';
-            var urlDelete = '../DeleteDepartment';
+            var urlEnd = 'Department';
         </script>
     </head>
     <body>
 
-        <%@include file="../WEB-INF/jspf/table_data.jspf" %>
+        <table id="dg" class="easyui-datagrid">
+        </table>
 
-        <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
-             closed="true" buttons="#dlg-buttons">
+        <div id="dlg" class="easyui-dialog" data-options="buttons:'#dlg-buttons',closed:true">
             <div class="ftitle">Department Data</div>
             <form id="fm" method="post" novalidate>
                 <div class="fitem">
                     <label>Department ID:</label>
-                    <input class="easyui-validatebox" name="id" required="true">
+                    <input class="easyui-validatebox" name="id" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>Name:</label>
-                    <input class="easyui-validatebox" name="name" required="true">
+                    <input class="easyui-validatebox" name="name" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>Description:</label>
-                    <textarea class="easyui-validatebox" required="true" name="description"></textarea>
+                    <textarea class="easyui-validatebox" name="description" data-options="required:true"></textarea>
                 </div>
                 <div class="fitem">
                     <label>Manager:</label>
-                    <input class="easyui-combobox" name="manager" url="../GetsEmployee?id=M" valueField="id" textField="title" panelHeight="auto" style="width:150px">
+                    <input class="easyui-combobox" name="manager" data-options="url:'../GetsEmployee',valueField:'id',textField:'full_name',panelHeight:'auto'" style="width:150px">
                 </div>
                 <div class="fitem">
                     <label>Street Address:</label>
-                    <input class="easyui-validatebox" name="street_address" required="true">
+                    <input class="easyui-validatebox" name="street_address" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>Postal Code:</label>
-                    <input class="easyui-validatebox" name="postal_code" required="true">
+                    <input class="easyui-validatebox" name="postal_code" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>City:</label>
-                    <input class="easyui-validatebox" name="city" required="true">
+                    <input class="easyui-validatebox" name="city" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>State Province:</label>
-                    <input class="easyui-validatebox" name="state_province" required="true">
+                    <input class="easyui-validatebox" name="state_province" data-options="required:true">
                 </div>
                 <div class="fitem">
                     <label>Country:</label>
-                    <input class="easyui-validatebox" name="country" required="true">
+                    <input class="easyui-validatebox" name="country" data-options="required:true">
                 </div>
             </form>
-        </div>
-        <div id="dlg-buttons">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData()">Save</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
         </div>
     </body>
 </html>

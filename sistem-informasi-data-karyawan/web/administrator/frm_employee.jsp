@@ -11,135 +11,95 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <%@include file="../WEB-INF/jspf/custom.jspf" %>
-        <style type="text/css">
-            #fm{
-                margin:0;
-                padding:10px 30px;
-            }
-            .ftitle{
-                font-size:14px;
-                font-weight:bold;
-                color:#666;
-                padding:5px 0;
-                margin-bottom:10px;
-                border-bottom:1px solid #ccc;
-            }
-            .fitem{
-                margin-bottom:5px;
-            }
-            .fitem label{
-                display:inline-block;
-                width:80px;
-            }
-        </style>
         <script type="text/javascript">
-            $.fn.datebox.defaults.formatter = function(date){
-                var y = date.getFullYear();
-                var m = date.getMonth()+1;
-                var d = date.getDate();
-                return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
-            };
-            $.fn.datebox.defaults.parser = function(s){
-                if (!s) return new Date();
-                var ss = s.split('-');
-                var m = parseInt(ss[0],10);
-                var d = parseInt(ss[1],10);
-                var y = parseInt(ss[2],10);
-                if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
-                    return new Date(y,m-1,d);
-                } else {
-                    return new Date();
-                }
-            };
-           
             var colTable = [[  
                     {field:'id',title:'ID',width:25,align:'center'},  
                     {field:'full_name',title:'Full Name',width:75},  
-                    {field:'job',title:'Job',width:50},  
-                    {field:'department',title:'Department',width:50}  
+                    {field:'email',title:'Email',width:50},  
+                    {field:'phone_number',title:'Phone Number',width:50}  
                 ]];
-            var urlTable = '../GetsEmployee';
-            var urlInsert = '../InsertEmployee';
-            var urlUpdate= '../UpdateEmployee?id=';
-            var urlDelete = '../DeleteEmployee';           
+            var urlEnd = 'Employee'
         </script>
     </head>
     <body>
+        <table id="dg" class="easyui-datagrid">
+        </table>
 
-        <%@include file="../WEB-INF/jspf/table_data.jspf" %>
-
-        <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
-             closed="true" buttons="#dlg-buttons">
+        <div id="dlg" class="easyui-dialog" data-options="buttons:'#dlg-buttons',closed:true">
             <div class="ftitle">Employee Data</div>
             <form id="fm" method="post" novalidate>
-                <div class="fitem">
-                    <label>Employee ID:</label>
-                    <input class="easyui-validatebox" name="id" required="true">
-                </div>
-                <div class="fitem">
-                    <label>First Name:</label>
-                    <input class="easyui-validatebox" name="first_name" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Last Name:</label>
-                    <input class="easyui-validatebox" name="last_name" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Gender:</label>
-                    <select id="cc" class="easyui-combobox" name="gender" required="true" style="width:150px">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-                <div class="fitem">
-                    <label>Birthday:</label>
-                    <input id="dd"  class="easyui-datebox" name="birthday" required="true" style="width:150px">
-                </div>
-                <div class="fitem">
-                    <label>Street Address:</label>
-                    <input class="easyui-validatebox" name="street_address" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Postal Code:</label>
-                    <input class="easyui-validatebox" name="postal_code" required="true">
-                </div>
-                <div class="fitem">
-                    <label>City:</label>
-                    <input class="easyui-validatebox" name="city" required="true">
-                </div>
-                <div class="fitem">
-                    <label>State Province:</label>
-                    <input class="easyui-validatebox" name="state_province" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Country:</label>
-                    <input class="easyui-validatebox" name="country" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Email:</label>
-                    <input class="easyui-validatebox" name="email" validType="email" required="true">
-                </div>
-                <div class="fitem">
-                    <label>Phone:</label>
-                    <input class="easyui-validatebox" name="phone_number" type="tel" maxlength="14" required="true"/>
-                </div>
-                <div class="fitem">
-                    <label>Job:</label>
-                    <input class="easyui-combobox" name="job" url="../GetsJob" valueField="id" textField="title" panelHeight="auto" style="width:150px">
-                </div>
-                <div class="fitem">
-                    <label>Department:</label>
-                    <input class="easyui-combobox" name="department" url="../GetsDepartment" valueField="id" textField="name" panelHeight="auto" style="width:150px">
-                </div>
-                <div class="fitem">
-                    <label>Photo:</label>
-                    <input type="file" name="url_photo" accept="image/jpg" value="../file/images/default.jpg">
+                <div class="easyui-accordion" data-options="fit:true,border:false" style="background-color:transparent;height:375px">
+                    <div title="Personal Data" data-options="selected:true" style="padding:10px;overflow:auto;">
+                        <div class="fitem">
+                            <label>Employee ID:</label>
+                            <input class="easyui-validatebox" name="id" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>First Name:</label>
+                            <input class="easyui-validatebox" name="first_name" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>Last Name:</label>
+                            <input class="easyui-validatebox" name="last_name" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>Gender:</label>
+                            <select id="cc" class="easyui-combobox" name="gender" data-options="panelHeight:'auto',required:true" style="width:150px">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="fitem">
+                            <label>Birthday:</label>
+                            <input id="dd"  class="easyui-datebox" name="birthday" data-options="required:true" style="width:150px">
+                        </div>
+                        <div class="fitem">
+                            <label>Job:</label>
+                            <input class="easyui-combobox" name="job" data-options="url:'../GetsJob',valueField:'id',textField:'title',panelHeight:'auto'" style="width:150px">
+                        </div>
+                        <div class="fitem">
+                            <label>Department:</label>
+                            <input class="easyui-combobox" name="department" data-options="url:'../GetsDepartment',valueField:'id',textField:'name',panelHeight:'auto'" style="width:150px">
+                        </div>
+                        <div class="fitem">
+                            <label>Photo:</label>
+                            <input type="file" name="url_photo" accept="image/jpg">
+                        </div> 
+                    </div>
+                    <div title="Domicile" style="padding:10px;">
+                        <div class="fitem">
+                            <label>Street Address:</label>
+                            <input class="easyui-validatebox" name="street_address" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>Postal Code:</label>
+                            <input class="easyui-validatebox" name="postal_code" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>City:</label>
+                            <input class="easyui-validatebox" name="city" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>State Province:</label>
+                            <input class="easyui-validatebox" name="state_province" data-options="required:true">
+                        </div>
+                        <div class="fitem">
+                            <label>Country:</label>
+                            <input class="easyui-validatebox" name="country" data-options="required:true">
+                        </div>
+                    </div>
+                    <div title="Contact Information" style="padding:10px;">
+                        <div class="fitem">
+                            <label>Email:</label>
+                            <input class="easyui-validatebox" name="email" data-options="required:true,validType:'email'">
+                        </div>
+                        <div class="fitem">
+                            <label>Phone:</label>
+                            <input class="easyui-validatebox" name="phone_number" type="tel" maxlength="14" data-options="required:true"/>
+                        </div>
+                    </div>
                 </div>
             </form>
-        </div>
-        <div id="dlg-buttons">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData()">Save</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
         </div>
     </body>
 </html>

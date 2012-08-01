@@ -1,15 +1,14 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div region="north" style="height:50px;padding:10px;background:red;">
+<div data-options="region:'north',border:false" style="height:50px;padding:10px;">
     <div style="float:right">
-        <div id="headerMenu">
-            <a href="#" class="easyui-menubutton" menu="#mm1"><%= new dao.UsersDAOImpl(Tools.PersistenceUtil.getEntityManager()).get((Long)session.getAttribute("user")).getEmployee().getLast_name()%></a>
-        </div>
-        <div id="mm1" style="width:150px;">
-            <div iconCls="icon-edit" onclick="addTab('Account','frm_account.jsp')">Change Setting</div>
-            <div iconCls="icon-cancel" onclick="javascript:window.location='../Logout'">logout</div>
-            <div class="menu-sep"></div>
-            <div iconCls="icon-help">Help</div>
-        </div>
+        <a href="javascript:void(0)" id="mb1" class="easyui-menubutton" data-options="menu:'#mm1'">
+            <%= new dao.UsersDAOImpl(utils.PersistenceUtil.getEntityManager()).get((Long) session.getAttribute("user")).getEmployee().getLast_name()%>
+        </a>
+    </div>
+    <div id="mm1" style="width:150px;">
+        <div onclick="addTab('Account','frm_users.jsp')">Change Setting</div>
+        <div class="menu-sep"></div>
+        <div onclick="javascript:window.location='../Logout'">Logout</div>
     </div>
 </div>

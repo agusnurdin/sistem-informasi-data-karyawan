@@ -11,68 +11,35 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <%@include file="../WEB-INF/jspf/custom.jspf" %>
-        <style type="text/css">
-            #fm{
-                margin:0;
-                padding:10px 30px;
-            }
-            .ftitle{
-                font-size:14px;
-                font-weight:bold;
-                color:#666;
-                padding:5px 0;
-                margin-bottom:10px;
-                border-bottom:1px solid #ccc;
-            }
-            .fitem{
-                margin-bottom:5px;
-            }
-            .fitem label{
-                display:inline-block;
-                width:80px;
-            }         
-            .fitem textarea{
-                width:150px;
-                height:100px;
-            }
-        </style>
         <script type="text/javascript">
             var colTable = [[  
                     {field:'id',title:'ID',width:25,align:'center'},  
                     {field:'title',title:'Title',width:50},  
                     {field:'description',title:'Description',width:75}  
                 ]];
-            var urlTable = '../GetsJob';
-            var urlInsert = '../InsertJob';
-            var urlUpdate = '../UpdateJob?id=';
-            var urlDelete = '../DeleteJob';
+            var urlEnd = 'Job';
         </script>
     </head>
     <body>
+        <table id="dg" class="easyui-datagrid">
+        </table>
 
-        <%@include file="../WEB-INF/jspf/table_data.jspf" %>
-
-        <div id="dlg" class="easyui-dialog" style="width:450px;padding:10px 20px"
-             closed="true" buttons="#dlg-buttons">
+        <div id="dlg" class="easyui-dialog" data-options="buttons:'#dlg-buttons',closed:true">
             <div class="ftitle">Job Data</div>
             <form id="fm" method="post" novalidate>
                 <div class="fitem">
                     <label>Job ID:</label>
-                    <input class="easyui-validatebox" name="id" required="true">
+                    <input class="easyui-validatebox" name="id" data-options="required:true">
                 </div>
                 <div class="fitem">
-                    <label>Title:</label>
-                    <input class="easyui-validatebox" name="title" required="true">
+                    <label>Job Title:</label>
+                    <input class="easyui-validatebox" name="title" data-options="required:true">
                 </div>
                 <div class="fitem">
-                    <label>Description:</label>
-                    <textarea class="easyui-validatebox" required="true" name="description"></textarea>
+                    <label>Job Description:</label>
+                    <textarea class="easyui-validatebox" name="description" data-options="required:true"></textarea>
                 </div>
             </form>
-        </div>
-        <div id="dlg-buttons">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData()">Save</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
         </div>
     </body>
 </html>
